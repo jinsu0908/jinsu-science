@@ -12,7 +12,7 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT,720) #CAP_PROP_FRAME_HEIGHT == 4
 face_id = input('\n enter user id end press <return> ==> ')
 print("\n [INFO] Initializing face capture. Look the camera and wait ...")
 
-count = 0 # # of caputre face images
+count = 10 # # of caputre face images
 #영상 처리 및 출력
 while True: 
     ret, frame = capture.read() #카메라 상태 및 프레임
@@ -49,9 +49,9 @@ import numpy as np #배열 계산 용이
 from PIL import Image #python imaging library
 import os
 
-path = 'dataset' #경로 (dataset 폴더)
+path = r'dataset' #경로 (dataset 폴더)
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'jinsu/haarcascade_frontalface_default.xml')
+detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 def getImagesAndLabels(path):
     imagePaths = [os.path.join(path,f) for f in os.listdir(path)]
@@ -82,6 +82,7 @@ faces, ids = getImagesAndLabels(path)
 recognizer.train(faces,np.array(ids)) #학습
 
 recognizer.write('trainer/trainer.yml')
+
 print('\n [INFO] {0} faces trained. Exiting Program'.format(len(np.unique(ids))))
 
 
@@ -90,14 +91,14 @@ import numpy as np
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('trainer/trainer.yml')
-cascadePath = 'jinsu/haarcascade_frontalface_default.xml'
+cascadePath = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 faceCascade = cv2.CascadeClassifier(cascadePath)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 id = 0
 
-names = ['None','sumin','dongjun','minji']
+names = ['None','jinsu','minsuk','boguk']
 
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1980)
@@ -137,4 +138,3 @@ while True:
 print("\n [INFO] Exiting Program and cleanup stuff")
 cam.release()
 cv2.destroyAllWindows()
-
